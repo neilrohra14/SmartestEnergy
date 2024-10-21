@@ -34,7 +34,10 @@ class External:
             
             response = requests.get(url) 
             response.raise_for_status()
-            logging.info(response.json())
+            # logging.info(response.json())
+            logging.info(f"Response received successfully for date: {target_date}")
+
+
 
             # response_df = response.json
             return response.json()
