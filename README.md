@@ -7,6 +7,7 @@ Describe the API structure.
 Describe the code structure. 
 Describe the process used to retrive data and save to file. 
 Complete remaining tests and describe them. Add test running to instructions file. 
+Change Readme file
 
 Additional analysis description 
     - Plot imbalance volume against buy/sell price to show relation. Can show sensitivity of prices to the imbalance volume. 
