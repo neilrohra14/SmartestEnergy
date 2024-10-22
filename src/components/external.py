@@ -37,9 +37,9 @@ class External:
             # logging.info(response.json())
             logging.info(f"Response received successfully for date: {target_date}")
 
-
-
             # response_df = response.json
+            # logging.info('Json is')
+            # logging.info(response.json())
             return response.json()
         
         except Exception as ex:

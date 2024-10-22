@@ -3,6 +3,7 @@ import pandas as pd
 from decimal import Decimal
 from src.utils.config import config
 from src.exception import CustomException
+from src.logger import logging
 import sys
 
 class CleanData:
@@ -14,9 +15,11 @@ class CleanData:
         
         try:
             if not json_data or "data" not in json_data:
+                logging.info("No data available.")
                 print("No data available.")
                 return None
 
+            # logging.info(json_data)
             cleaned_data = []
             for entry in json_data['data']:
                 cleaned_entry = {}
@@ -27,11 +30,13 @@ class CleanData:
                         # Blank check
                         if value is None or (isinstance(value, str) and value.strip() == ""):
                             raise CustomException(f"Column '{column}' contains null or blank values.", sys)
+                        # logging.info("Blank check complete")
 
                         # Data type
                         expected_type = self.expected_data_types[column]
                         if not self.validate_data_type(value, expected_type):
                             raise CustomException(f"Column '{column}' has invalid data type. Expected {expected_type}.", sys)
+                        # logging.info("Data type validation complete")
 
                         if expected_type == "decimal":
                             cleaned_entry[column] = Decimal(value)
@@ -39,11 +44,12 @@ class CleanData:
                             cleaned_entry[column] = value
 
                 cleaned_data.append(cleaned_entry)
-
+            logging.info(cleaned_data)
             df = pd.DataFrame(cleaned_data)
 
             if 'startTime' in df.columns:
-                df['startTime'] = pd.to_datetime(df['startTime'])
+                df['startTime'] = pd.to_datetime(df['startTime'].str.replace('Z', ''))
+            logging.info("Cleaning data completed")
 
             return df
         except KeyError as e:
