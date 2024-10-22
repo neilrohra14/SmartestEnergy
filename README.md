@@ -8,6 +8,7 @@ Describe the code structure.
 Describe the process used to retrive data and save to file. 
 Complete remaining tests and describe them. Add test running to instructions file. 
 Change Readme file
+Add back the png files for one time so charts can be seen without running the solution.
 
 Additional analysis description 
     - Plot imbalance volume against buy/sell price to show relation. Can show sensitivity of prices to the imbalance volume. 
