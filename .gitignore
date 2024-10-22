@@ -1,3 +1,6 @@
+# Ignore all .png files in the base folder
+*.png
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
