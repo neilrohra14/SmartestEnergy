@@ -10,9 +10,8 @@ from src.exception import CustomException
 import os
 
 
-def process_data(target_date=None):  # Optional parameter for the date
+def process_data(target_date=None): 
     try:
-        # If no target date is provided, set it to yesterday's date
         if target_date is None:
             yesterday = datetime.now() - timedelta(days=1)
             target_date = yesterday.strftime('%Y-%m-%d')  # Format date as 'yyyy-mm-dd'
@@ -21,25 +20,24 @@ def process_data(target_date=None):  # Optional parameter for the date
             external = External()
             response_df = external.fetch_data(target_date)
 
-            # Clean the data using CleanData class
+            # Clean the data
             cleaner = CleanData()
             try:
                 cleaned_df = cleaner.clean(response_df)
                 if cleaned_df is not None:
                     logging.info(f"Cleaned data for {target_date}: {cleaned_df.head()}")
                     
-                    # Save the cleaned data to Excel
+                    # Save the cleaned data
                     file_path = os.path.join(os.getcwd(), 'artifacts', 'cleaned_data.xlsx')
                     save_cleaned_data_to_excel(cleaned_df, target_date)
 
-                    # Analyse the data and save the chart
+                    # Analyse the data
                     analyser = AnalyseData(cleaned_df)
                     analyser.save_chart_to_excel(target_date)
 
                     # Generate and save the imbalance summary
                     analyser.save_summary_to_excel(target_date)
                     
-                    # Automatically open the Excel file after processing
                     open_excel_file(file_path)
 
                 else:

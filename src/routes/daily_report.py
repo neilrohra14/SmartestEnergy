@@ -10,10 +10,9 @@ daily_report = Blueprint('daily_report', __name__)
 @daily_report.route('/daily-report', methods=['GET'])
 def get_daily_report():
     try:
+        #pass None if not provided
+        target_date = request.args.get('date')
 
-        target_date = request.args.get('date', "2024-02-01")  # Default date if not provided
-
-        # Call the process_data function and pass the target date
         result_message = process_data(target_date)
         return jsonify({"message": result_message}), 200
     except Exception as e:
